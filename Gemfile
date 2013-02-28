@@ -39,6 +39,9 @@ group :production do
 
   # Use unicorn as the app server
   gem 'unicorn'
+
+  # Memcached
+  gem 'dalli'
 end
 
 # group :development do
