@@ -13,11 +13,9 @@
       %th Rating
       %th
   %tbody
-    - counter = 0
     - @products.each do |product|
-      - counter += 1
       %tr
-        %td= link_to product.name, category_product_path(product.category, product), :id => "product_link_#{counter}"
+        %td= link_to product.name, category_product_path(product.category, product)
         %td
           - if @category && @category == product.category
             = product.category
