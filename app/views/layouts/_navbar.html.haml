@@ -1,0 +1,36 @@
+.navbar.navbar-inverse.navbar-fixed-top
+  .navbar-inner
+    .container
+      %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.brand{:href => "/"} Webshop
+      .nav-collapse.collapse
+        %ul.nav
+          - if user_signed_in?
+            %li
+              = link_to "Logged in as #{current_user}", edit_user_registration_path
+            %li
+              = link_to "Logout", destroy_user_session_path, method: :delete
+          - else
+            %li
+              = link_to "Sign up", new_user_registration_path
+            %li
+              = link_to "Login", new_user_session_path
+
+        / %ul.nav
+        /   - if current_page?(page_impressum_path)
+        /     %li{:class => 'active'}
+        /       =link_to 'Impressum', page_impressum_path
+        /   - else
+        /     %li
+        /       =link_to 'Impressum', page_impressum_path
+
+        /   - if current_page?(page_gemeinschaft_path) || current_page?(page_gs3_path) || current_page?(page_gs4_path) || current_page?(page_gs5_path)
+        /     %li{:class => 'active'}
+        /       =link_to 'Gemeinschaft', page_gs5_path
+        /   - else
+        /     %li
+        /       =link_to 'Gemeinschaft', page_gs5_path
+      / /.nav-collapse
