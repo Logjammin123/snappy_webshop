@@ -57,11 +57,10 @@ end
   b.link(:id, add_button_id).click
 end
 
-
 # Bob logs out
 #
-#b.goto "#{url}/users/sign_out"
+b.link(:text, 'Logout').click
 
 puts "#{(Time.now - start) - clear_caching_time} seconds"
 
-# b.close
+b.close

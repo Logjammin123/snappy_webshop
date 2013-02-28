@@ -7,11 +7,9 @@ class RatingsController < ApplicationController
 
     respond_to do |format|
       if @rating.save
-        format.html { redirect_to @rating.product, notice: "Rating for #{product} was successfully created." }
-        format.json { render json: @rating, status: :created, location: @rating }
+        format.html { redirect_to category_product_path(@rating.product.category, @rating.product), notice: "Rating for #{@rating.product} was successfully created." }
       else
         format.html { render action: "new" }
-        format.json { render json: @rating.errors, status: :unprocessable_entity }
       end
     end
   end
