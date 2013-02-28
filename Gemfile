@@ -35,6 +35,7 @@ end
 group :production do
   # Use MySQL as the production database
   gem 'mysql'
+  gem 'activerecord-mysql2-adapter'
 
   # Use unicorn as the app server
   gem 'unicorn'
