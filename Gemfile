@@ -28,6 +28,10 @@ gem 'devise'
 gem 'cancan'
 gem 'breadcrumbs_on_rails'
 
+group :development do
+  gem 'rails-erd'
+end
+
 # group :development do
 #   gem 'rack-mini-profiler'
 # end
