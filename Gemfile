@@ -32,6 +32,14 @@ group :development do
   gem 'rails-erd'
 end
 
+group :production do
+  # Use MySQL as the production database
+  gem 'mysql'
+
+  # Use unicorn as the app server
+  gem 'unicorn'
+end
+
 # group :development do
 #   gem 'rack-mini-profiler'
 # end
