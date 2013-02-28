@@ -3,45 +3,47 @@
 - else
   - content_for :title, "Listing of the first #{@products.count} products"
 
-%table.table.table-striped{:id => 'products'}
-  %thead
-    %tr
-      %th Name
-      %th Category
-      %th Description
-      %th Price
-      %th Rating
-      %th
-  %tbody
-    - @products.each do |product|
+- cache [current_user, @products] do
+  %table.table.table-striped{:id => 'products'}
+    %thead
       %tr
-        %td= link_to product.name, category_product_path(product.category, product)
-        %td
-          - if @category && @category == product.category
-            = product.category
-          - else
-            = link_to product.category, category_products_path(product.category)            
-        %td= product.description
-        %td
-          - if user_signed_in? && current_user.discount > 0
-            = number_to_currency(product.discounted_price(current_user))
-            %br
-            %strike
-              = number_to_currency(product.price)
-          - else
-            = number_to_currency(product.price)          
-        %td{:style => 'white-space: nowrap'}
-          - (1..product.average_rating).each do 
-            %i.icon-star
-          - (1..(5 - product.average_rating)).each do 
-            %i.icon-star-empty
-          - if product.ratings.count > 0
-            = "(#{product.ratings.count})"
-        %td{:style => 'white-space: nowrap'}
-          - if user_signed_in? && !@current_cart.line_items.where(:product_id => product.id).any?
-            = link_to(cart_line_items_path(@current_cart, :product_id => product.id), :method => :post, :class => "btn btn-small", :id => "add_#{product.id}") do
-              %i.icon-shopping-cart
-              add
+        %th Name
+        %th Category
+        %th Description
+        %th Price
+        %th Rating
+        %th
+    %tbody
+      - @products.each do |product|
+        - cache [current_user, product] do
+          %tr
+            %td= link_to product.name, category_product_path(product.category, product)
+            %td
+              - if @category && @category == product.category
+                = product.category
+              - else
+                = link_to product.category, category_products_path(product.category)            
+            %td= product.description
+            %td
+              - if user_signed_in? && current_user.discount > 0
+                = number_to_currency(product.discounted_price(current_user))
+                %br
+                %strike
+                  = number_to_currency(product.price)
+              - else
+                = number_to_currency(product.price)          
+            %td{:style => 'white-space: nowrap'}
+              - (1..product.average_rating).each do 
+                %i.icon-star
+              - (1..(5 - product.average_rating)).each do 
+                %i.icon-star-empty
+              - if product.ratings.count > 0
+                = "(#{product.ratings.count})"
+            %td{:style => 'white-space: nowrap'}
+              - if user_signed_in? && !@current_cart.line_items.where(:product_id => product.id).any?
+                = link_to(cart_line_items_path(@current_cart, :product_id => product.id), :method => :post, :class => "btn btn-small", :id => "add_#{product.id}") do
+                  %i.icon-shopping-cart
+                  add
 
 %br/
 - if user_signed_in?
