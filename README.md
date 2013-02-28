@@ -1,6 +1,12 @@
 snappy_webshop
 ==============
 
-Example webshop.
+This is an example Ruby on Rails based webshop.
 
-Test.
+Database setup
+==============
+rake db:migrate
+rake db:seed
+
+
+ruby lib/speed-test.rb
