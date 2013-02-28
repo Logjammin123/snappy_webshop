@@ -1,7 +1,6 @@
 require 'watir-webdriver'
 
 url = 'http://0.0.0.0:3000'
-
 b = Watir::Browser.new
 
 start = Time.now
