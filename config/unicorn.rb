@@ -16,7 +16,7 @@ working_directory APP_PATH
 
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
-listen "/tmp/unicorn.blog.sock", :backlog => 64
+listen "/tmp/unicorn.snappy_webshop.sock", :backlog => 64
 listen 8080, :tcp_nopush => true
 
 # nuke workers after 30 seconds instead of 60 seconds (the default)
@@ -28,8 +28,8 @@ pid "/var/run/unicorn_snappy_webshop.pid"
 # By default, the Unicorn logger will write to stderr.
 # Additionally, some applications/frameworks log to stderr or stdout,
 # so prevent them from going to /dev/null when daemonized here:
-stderr_path APP_PATH + "/log/unicorn.blog.stderr.log"
-stdout_path APP_PATH + "/log/unicorn.blog.stdout.log"
+stderr_path APP_PATH + "/log/unicorn.snappy_webshop.stderr.log"
+stdout_path APP_PATH + "/log/unicorn.snappy_webshop.stdout.log"
 
 before_fork do |server, worker|
   # the following is highly recomended for Rails + "preload_app true"
