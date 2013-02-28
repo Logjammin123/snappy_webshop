@@ -7,7 +7,7 @@ b = Watir::Browser.new
 start = Time.now
 clear_caching_time = 0
 
-# User looks around.
+# A anonymous user looks around.
 #
 ['AA', 'AB', 'AH'].each do |product_name|
   b.goto url
