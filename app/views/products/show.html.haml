@@ -32,13 +32,13 @@
               %i.icon-shopping-cart
               add
 
-  - cache [current_user, @product.ratings, 'products_show_ratings'] do
+  - cache [current_user, @product.ratings, 'products_show_ratings_table'] do
     %h2 Ratings
 
     %table.table.table-striped
       - if @product.ratings.any?
         - @product.ratings.order(:value).reverse_order.each do |rating|
-          - cache rating do
+          - cache [rating, 'products_show_ratings_table_row'] do
             %tr
               %td
                 = rating.user
