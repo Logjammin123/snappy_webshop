@@ -8,5 +8,10 @@ Database setup
 rake db:migrate
 rake db:seed
 
+Misc
+====
+rake db:migrate RAILS_ENV=production
+rake assets:precompile
+
 
 ruby lib/speed-test.rb
