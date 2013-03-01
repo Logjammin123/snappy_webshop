@@ -32,7 +32,7 @@
               %i.icon-shopping-cart
               add
 
-  - cache [current_user, @product.ratings] do
+  - cache [current_user, @product.ratings, 'products_show_ratings'] do
     %h2 Ratings
 
     %table.table.table-striped

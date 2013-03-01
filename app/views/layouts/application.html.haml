@@ -33,7 +33,7 @@
       .row
         .span8
           = yield
-        - cache [current_user, @current_cart] do  
+        - cache [current_user, @current_cart, 'application_html'] do  
           - if user_signed_in? && current_user.carts.find_by_state('open').line_items.any?
             .span4
               .well
