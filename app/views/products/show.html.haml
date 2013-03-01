@@ -2,7 +2,7 @@
 - if !@product.description.blank?
   - content_for :meta_description, truncate(@product.description, :length => 50)
 
-- cache [current_user, @product] do
+- cache [current_user, @product, 'products_show'] do
   %table.table.table-striped
     %tr
       %td

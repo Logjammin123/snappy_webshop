@@ -3,7 +3,7 @@
 - else
   - content_for :title, "Listing of the first #{@products.count} products"
 
-- cache [current_user, @products] do
+- cache [current_user, @products, 'products_index_table'] do
   %table.table.table-striped{:id => 'products'}
     %thead
       %tr
@@ -15,7 +15,7 @@
         %th
     %tbody
       - @products.each do |product|
-        - cache [current_user, product] do
+        - cache [current_user, product, 'products_index_table_row'] do
           %tr
             %td= link_to product.name, category_product_path(product.category, product)
             %td
