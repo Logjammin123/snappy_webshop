@@ -15,7 +15,8 @@
     /[if lt IE 9]
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   %body
-    = render 'layouts/navbar'
+    - cache [current_user, 'navigation_bar'] do
+      = render 'layouts/navbar'
     .container
       .row
         .span12
@@ -32,11 +33,13 @@
       .row
         .span8
           = yield
-        - if user_signed_in? && current_user.carts.find_by_state('open').line_items.any?
-          .span4
-            .well
-              = render 'carts/cart', :cart => @current_cart
+        - cache [current_user, @current_cart] do  
+          - if user_signed_in? && current_user.carts.find_by_state('open').line_items.any?
+            .span4
+              .well
+                = render 'carts/cart', :cart => @current_cart
             
-      %hr/
-      = render 'layouts/footer'
+      - cache ['footer'] do
+        %hr/
+        = render 'layouts/footer'
     / /container

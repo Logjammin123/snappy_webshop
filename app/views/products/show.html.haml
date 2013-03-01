@@ -2,58 +2,61 @@
 - if !@product.description.blank?
   - content_for :meta_description, truncate(@product.description, :length => 50)
 
-%table.table.table-striped
-  %tr
-    %td
-      %b Category:
-    %td
-      = link_to @product.category, @product.category
-  %tr
-    %td
-      %b Description:
-    %td
-      = @product.description
-  %tr
-    %td
-      %b Price:
-    %td
-      - if user_signed_in? && current_user.discount > 0
-        = number_to_currency(@product.discounted_price(current_user))
-        %br
-        %strike
+- cache [current_user, @product] do
+  %table.table.table-striped
+    %tr
+      %td
+        %b Category:
+      %td
+        = link_to @product.category, @product.category
+    %tr
+      %td
+        %b Description:
+      %td
+        = @product.description
+    %tr
+      %td
+        %b Price:
+      %td
+        - if user_signed_in? && current_user.discount > 0
+          = number_to_currency(@product.discounted_price(current_user))
+          %br
+          %strike
+            = number_to_currency(@product.price)
+        - else
           = number_to_currency(@product.price)
+
+        - if user_signed_in? && !@current_cart.line_items.where(:product_id => @product.id).any?
+          %p
+            = link_to(cart_line_items_path(@current_cart, :product_id => @product.id), :method => :post, :class => "btn btn-small") do
+              %i.icon-shopping-cart
+              add
+
+  - cache [current_user, @product.ratings] do
+    %h2 Ratings
+
+    %table.table.table-striped
+      - if @product.ratings.any?
+        - @product.ratings.order(:value).reverse_order.each do |rating|
+          - cache rating do
+            %tr
+              %td
+                = rating.user
+              %td
+                - (1..rating.value).each do 
+                  %i.icon-star
+                - (1..(5 - rating.value)).each do 
+                  %i.icon-star-empty
       - else
-        = number_to_currency(@product.price)
+        %tr
+          %td{:colspan => '2'}
+            This product hasn't been rated yet.
 
-      - if user_signed_in? && !@current_cart.line_items.where(:product_id => @product.id).any?
-        %p
-          = link_to(cart_line_items_path(@current_cart, :product_id => @product.id), :method => :post, :class => "btn btn-small") do
-            %i.icon-shopping-cart
-            add
-
-%h2 Ratings
-
-%table.table.table-striped
-  - if @product.ratings.any?
-    - @product.ratings.order(:value).reverse_order.each do |rating|
-      %tr
-        %td
-          = rating.user
-        %td
-          - (1..rating.value).each do 
-            %i.icon-star
-          - (1..(5 - rating.value)).each do 
-            %i.icon-star-empty
-  - else
-    %tr
-      %td{:colspan => '2'}
-        This product hasn't been rated yet.
-
-  - if user_signed_in? && !current_user.ratings.where(:product_id => @product.id).any?
-    %tr
-      %td
-        Please rate this product:
-      %td
-        - (1..5).each do |i|
-          = link_to(product_ratings_path(@product, :user_id => current_user.id, :value => i), :method => :post, :id => "product_#{@product}_rating_#{i}") do
-            %i.icon-star-empty
+      - if user_signed_in? && !current_user.ratings.where(:product_id => @product.id).any?
+        %tr
+          %td
+            Please rate this product:
+          %td
+            - (1..5).each do |i|
+              = link_to(product_ratings_path(@product, :user_id => current_user.id, :value => i), :method => :post, :id => "product_#{@product}_rating_#{i}") do
+                %i.icon-star-empty

@@ -7,24 +7,25 @@
       %th Price
   %tbody
     - cart.line_items.each do |line_item|
-      %tr
-        %td
-          = link_to line_item.product, category_product_path(line_item.product.category, line_item.product)
-        %td{:style => 'white-space: nowrap'}
-          = line_item.quantity.to_i
-          = link_to(cart_line_item_path(@current_cart, line_item, :quantity => (line_item.quantity + 1)), :method => :put, :class => "btn btn-small") do
-            %i.icon-plus
-          = link_to(cart_line_item_path(@current_cart, line_item, :quantity => (line_item.quantity - 1)), :method => :put, :class => "btn btn-small") do
-            %i.icon-minus
+      - cache line_item do  
+        %tr
+          %td
+            = link_to line_item.product, category_product_path(line_item.product.category, line_item.product)
+          %td{:style => 'white-space: nowrap'}
+            = line_item.quantity.to_i
+            = link_to(cart_line_item_path(@current_cart, line_item, :quantity => (line_item.quantity + 1)), :method => :put, :class => "btn btn-small") do
+              %i.icon-plus
+            = link_to(cart_line_item_path(@current_cart, line_item, :quantity => (line_item.quantity - 1)), :method => :put, :class => "btn btn-small") do
+              %i.icon-minus
 
+          %td
+            = number_to_currency(line_item.total)
+      %tr
+        %td{:colspan => '2'}
+          %strong
+            Total
         %td
-          = number_to_currency(line_item.total)
-    %tr
-      %td{:colspan => '2'}
-        %strong
-          Total
-      %td
-        = number_to_currency(cart.total)
+          = number_to_currency(cart.total)
 
 %p
   = link_to(cart_path(@current_cart), :method => :delete, :class => "btn btn-small") do
