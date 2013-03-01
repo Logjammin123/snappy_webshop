@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   has_many :carts
   has_many :ratings
 
-  belongs_to :discount_group
+  belongs_to :discount_group, :touch => true
   delegate :discount, :to => :discount_group, :allow_nil => true
 
   def to_s

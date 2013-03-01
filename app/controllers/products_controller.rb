@@ -10,10 +10,7 @@ class ProductsController < ApplicationController
       @products = Product.limit(25)
     end
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @products }
-    end
+    fresh_when :etag => [current_user, @products.order(:updated_at).last]
   end
 
   # GET /products/1
@@ -25,10 +22,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     spread_breadcrumbs
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @product }
-    end
+    fresh_when :etag => [current_user, @product]
   end
 
   # GET /products/new

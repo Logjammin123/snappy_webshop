@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
   attr_accessible :category_id, :description, :name, :price
 
-  belongs_to :category
+  belongs_to :category, :touch => true
   has_many :ratings
   has_many :line_items
 

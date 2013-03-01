@@ -1,7 +1,7 @@
 class Cart < ActiveRecord::Base
   attr_accessible :state, :user_id
 
-  belongs_to :user
+  belongs_to :user, :touch => true
   has_many :line_items
 
   def total
