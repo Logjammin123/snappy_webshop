@@ -42,6 +42,9 @@ group :production do
 
   # Memcached
   gem 'dalli'
+
+  # https://github.com/rails/cache_digests
+  gem 'cache_digests'
 end
 
 # group :development do

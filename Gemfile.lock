@@ -32,6 +32,8 @@ GEM
     bcrypt-ruby (3.0.1)
     breadcrumbs_on_rails (2.3.0)
     builder (3.0.4)
+    cache_digests (0.2.0)
+      actionpack (>= 3.2)
     cancan (1.6.9)
     choice (0.1.6)
     coffee-rails (3.2.2)
@@ -135,6 +137,7 @@ PLATFORMS
 
 DEPENDENCIES
   breadcrumbs_on_rails
+  cache_digests
   cancan
   coffee-rails (~> 3.2.1)
   dalli
